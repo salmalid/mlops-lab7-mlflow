@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: churn-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: churn-api
+  template:
+    metadata:
+      labels:
+        app: churn-api
+    spec:
+      volumes:
+        - name: churn-volume
+          persistentVolumeClaim:
+            claimName: churn-storage
+
+      containers:
+        - name: api
+          image: churn-api:v1  # v1 présente le tag de l'image cible
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: MODEL_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: churn-config
+                  key: MODEL_NAME
+
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: churn-config
+                  key: LOG_LEVEL
+
+            - name: MONITORING_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: churn-secret
+                  key: MONITORING_TOKEN
+
+          volumeMounts:
+            - name: churn-volume
+              mountPath: /app/registry
+              subPath: registry
+
+            - name: churn-volume
+              mountPath: /app/models
+              subPath: models
+
+            - name: churn-volume
+              mountPath: /app/logs
+              subPath: logs
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: 8000
+            failureThreshold: 30
+            periodSeconds: 5

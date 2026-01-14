@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: churn-config
+data:
+  MODEL_NAME: "churn_model_v1"
+  LOG_LEVEL: "info"

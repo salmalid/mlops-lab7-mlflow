@@ -1,0 +1,7 @@
+fastapi            # Framework web rapide pour créer des APIs Python
+uvicorn[standard]  # Serveur ASGI pour exécuter FastAPI
+pydantic           # Validation et typage des données
+scikit-learn==1.8  # Entraînement et inférence des modèles ML
+pandas==2.2.3      # Manipulation de données tabulaires
+numpy==2.1.3       # Calcul numérique
+joblib==1.4.2      # Sérialisation et chargement des modèles

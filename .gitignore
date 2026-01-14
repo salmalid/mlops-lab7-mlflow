@@ -1,0 +1,9 @@
+
+venv_mlops/
+__pycache__/
+*.pyc
+logs/
+models/
+dvc_storage/
+mlflow/mlruns/
+mlflow/artifacts/
