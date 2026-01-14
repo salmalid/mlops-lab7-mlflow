@@ -1,4 +1,4 @@
-# Lab 7 : Intégration MLflow pour le Suivi et la Gestion des Modèles
+# Lab 7 : Gestion du cycle de vie des modèles avec MLflow
 
 ## Introduction
 
@@ -139,7 +139,7 @@ rollback :
 ## Étape 9 : API – chargement du modèle actif
 Adapter l'API FastAPI pour charger automatiquement le modèle actif depuis MLflow.
 
-### Résultat attendu
+### Résultat
 
 -  L'API charge toujours la version pointée par `production`
 -  Pas besoin de modifier le code pour changer de modèle
